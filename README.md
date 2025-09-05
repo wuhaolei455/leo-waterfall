@@ -28,6 +28,27 @@ npm install leo-waterfall
 yarn add leo-waterfall
 ```
 
+## 🎯 在线演示
+
+本项目包含一个全面的实例演示页面，展示所有功能和使用场景：
+
+```bash
+# 启动演示应用
+npm start
+```
+
+然后访问 `http://localhost:3000` 并点击 **"🎯 实例演示"** 按钮。
+
+演示内容包括：
+- 🌊 基础瀑布流功能
+- 🎨 自定义渲染效果  
+- ⚡ 懒加载性能优化
+- 📱 响应式布局适配
+- 🚀 性能对比分析
+- 📂 分类筛选功能
+
+详细说明请参考 [EXAMPLES.md](EXAMPLES.md)。
+
 ## 🚀 快速开始
 
 ### 基础用法
@@ -382,5 +403,6 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ---
 
-**Leo Waterfall** - 让瀑布流布局变得简单而高效 🌊#   l e o - w a t e r f a l l  
+**Leo Waterfall** - 让瀑布流布局变得简单而高效 🌊#   l e o - w a t e r f a l l 
+ 
  

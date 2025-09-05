@@ -1,0 +1,44 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "es6"],
+    "allowJs": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": [
+    "src/components/**/*",
+    "src/hooks/**/*",
+    "src/types/**/*",
+    "src/utils/**/*",
+    "src/index.ts"
+  ],
+  "exclude": [
+    "src/App.tsx",
+    "src/App.css",
+    "src/App.test.tsx",
+    "src/index.css",
+    "src/reportWebVitals.ts",
+    "src/setupTests.ts",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "node_modules",
+    "dist",
+    "build"
+  ]
+}
