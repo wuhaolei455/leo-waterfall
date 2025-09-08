@@ -1,64 +1,22 @@
 {
   "name": "leo-waterfall",
-  "version": "1.0.0",
-  "description": "高性能 React 瀑布流组件库，支持响应式布局、懒加载、自定义渲染等功能",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "README.md"
-  ],
-  "keywords": [
-    "react",
-    "waterfall",
-    "masonry",
-    "grid",
-    "layout",
-    "responsive",
-    "lazy-loading",
-    "typescript"
-  ],
-  "author": "Leo",
-  "license": "MIT",
-  "homepage": "https://github.com/yourusername/leo-waterfall#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yourusername/leo-waterfall.git"
-  },
-  "bugs": {
-    "url": "https://github.com/yourusername/leo-waterfall/issues"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
-  },
-  "dependencies": {},
-  "devDependencies": {
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-scripts": "5.0.1",
-    "tailwindcss": "^4.1.13",
-    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:lib": "tsc --project tsconfig.lib.json",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prepare": "npm run build:lib"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
