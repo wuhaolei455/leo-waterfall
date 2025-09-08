@@ -5,6 +5,39 @@
   margin: 0;
 }
 
+/* 导航标签样式 */
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  gap: 8px;
+}
+
+.nav-tab {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.nav-tab:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-tab.active {
+  background: white;
+  color: #667eea;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* 控制面板样式 */
 .control-panel {
   background: rgba(255, 255, 255, 0.95);
