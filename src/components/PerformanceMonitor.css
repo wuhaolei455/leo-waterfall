@@ -1,0 +1,356 @@
+/* 性能监控面板样式 */
+.performance-monitor-panel {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+.performance-monitor-panel h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 性能得分 */
+.performance-score {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.score-main {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.score-main .score {
+  font-size: 32px;
+  margin-left: 8px;
+}
+
+.score-main .score.good {
+  color: #4ade80;
+}
+
+.score-main .score.warning {
+  color: #fbbf24;
+}
+
+.score-main .score.poor {
+  color: #f87171;
+}
+
+.score-breakdown {
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.score-breakdown span {
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* 性能指标 */
+.performance-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.metric-group {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.metric-group h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metrics span {
+  font-size: 14px;
+  opacity: 0.9;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metrics span:last-child {
+  border-bottom: none;
+}
+
+/* 图片指标叠加层 */
+.waterfall-image-container {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.waterfall-image-container.loaded {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.waterfall-image-container.error {
+  border: 2px solid #f87171;
+}
+
+.image-metrics-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.load-time {
+  background: rgba(34, 197, 94, 0.9);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.error-indicator {
+  font-size: 16px;
+  background: rgba(239, 68, 68, 0.9);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+/* 加载状态 */
+.loading-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner-small {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e2e8f0;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .performance-monitor-panel {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .performance-metrics {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .metric-group {
+    padding: 12px;
+  }
+  
+  .score-main {
+    font-size: 20px;
+  }
+  
+  .score-main .score {
+    font-size: 28px;
+  }
+  
+  .score-breakdown {
+    font-size: 12px;
+    gap: 8px;
+  }
+}
+
+/* 性能监控开关按钮 */
+.performance-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.performance-toggle:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+.performance-toggle:active {
+  transform: scale(0.95);
+}
+
+/* 性能监控模态框 */
+.performance-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.performance-modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.performance-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.performance-modal-header h2 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #64748b;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close-button:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+/* 详细性能数据表格 */
+.performance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.performance-table th,
+.performance-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.performance-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+}
+
+.performance-table tr:hover {
+  background: #f8fafc;
+}
+
+/* 性能图表容器 */
+.performance-chart {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-style: italic;
+}
+
+/* 导出按钮 */
+.export-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.export-button {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.export-button:hover {
+  background: #059669;
+}
+
+.export-button.secondary {
+  background: #6b7280;
+}
+
+.export-button.secondary:hover {
+  background: #4b5563;
+}
