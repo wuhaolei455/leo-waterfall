@@ -2,10 +2,10 @@ import { ImageInfo, WaterfallLayoutResult } from "../types";
 
 export function createWaterfallLayout(
     images: ImageInfo[],
-    columnWidth = 400,
-    gap = 16,
-    minColumns = 2,
-    maxColumns = 8
+    _columnWidth = 400,
+    _gap = 16,
+    _minColumns = 2,
+    _maxColumns = 8
 ): WaterfallLayoutResult {
     const waterfallLayoutParams: WaterfallLayoutResult = {
         items: [],
