@@ -1,7 +1,7 @@
 {
   "name": "leo-waterfall",
   "description": "瀑布流组件sdk",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -65,7 +65,9 @@
       "sourceType": "module",
       "ecmaVersion": "latest"
     },
-    "plugins": ["@typescript-eslint"],
+    "plugins": [
+      "@typescript-eslint"
+    ],
     "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended"
@@ -73,7 +75,10 @@
     "rules": {
       "@typescript-eslint/no-unused-vars": [
         "warn",
-        { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
       ]
     }
   },
