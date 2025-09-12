@@ -54,6 +54,12 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major"
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
