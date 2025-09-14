@@ -1,7 +1,7 @@
 {
-  "name": "leo-waterfall",
+  "name": "solar-waterfall",
   "description": "瀑布流组件sdk",
-  "version": "1.0.5",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -18,12 +18,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/whl555/leo-waterfall"
+    "url": "https://github.com/whl555/solar-waterfall"
   },
   "bugs": {
-    "url": "https://github.com/whl555/leo-waterfall/issues"
+    "url": "https://github.com/whl555/solar-waterfall/issues"
   },
-  "homepage": "https://github.com/whl555/leo-waterfall#readme",
+  "homepage": "https://github.com/whl555/solar-waterfall#readme",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
