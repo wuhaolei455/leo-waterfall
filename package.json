@@ -1,7 +1,7 @@
 {
   "name": "solar-waterfall",
   "description": "瀑布流组件sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
