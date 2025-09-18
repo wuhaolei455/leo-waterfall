@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useContainerSize } from "../hooks/useContainerSize";
 import {
   createWaterfallLayout,
   generateTestImages,
@@ -15,6 +16,8 @@ function WaterfallGrid({
   const [containerWidth, setContainerWidth] = useState(1200);
   const [imageMetrics, setImageMetrics] = useState([]);
   const containerRef = useRef(null);
+
+  const { width: observedWidth } = useContainerSize(containerRef);
 
   // 生成图片数据
   useEffect(() => {
@@ -33,19 +36,12 @@ function WaterfallGrid({
     setImageMetrics(initialMetrics);
   }, [imageCount]);
 
-  // 监听容器宽度变化
+  // 根据容器尺寸更新本地宽度状态（解耦计算依赖）
   useEffect(() => {
-    const updateLayout = () => {
-      if (containerRef.current) {
-        const width = containerRef.current.offsetWidth;
-        setContainerWidth(width);
-      }
-    };
-
-    updateLayout();
-    window.addEventListener("resize", updateLayout);
-    return () => window.removeEventListener("resize", updateLayout);
-  }, []);
+    if (observedWidth > 0) {
+      setContainerWidth(observedWidth);
+    }
+  }, [observedWidth]);
 
   // 计算瀑布流布局
   useEffect(() => {
@@ -172,7 +168,7 @@ function WaterfallGrid({
                       height: `${img.height}px`,
                     }}
                     loading="lazy"
-                    onLoad={(e) => {
+                    onLoad={() => {
                       const loadTime = performance.now();
                       handleImageLoad(img.id, loadTime);
                     }}

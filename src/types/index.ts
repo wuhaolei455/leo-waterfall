@@ -1,7 +1,8 @@
 // 图片数据
 export interface ImageInfo {
     width: number,
-    height: number
+    height: number,
+    url: string
 }
 
 // 瀑布流布局列
@@ -13,6 +14,6 @@ export interface WaterfallLayoutColumnItem {
 // 瀑布流布局
 
 export interface WaterfallLayoutResult {
-    images: WaterfallLayoutColumnItem[],
+    columns: WaterfallLayoutColumnItem[],
     totalColumns: number,
 }

@@ -1,3 +1,4 @@
+/* eslint-env node */
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
@@ -28,6 +29,7 @@ export default [
             format: 'es',
             sourcemap: true
         },
+        external: ['react', 'react-dom'],
         plugins: [
             resolve(),
             typescript({
@@ -48,6 +50,7 @@ export default [
             sourcemap: true,
             exports: 'named'
         },
+        external: ['react', 'react-dom'],
         plugins: [
             resolve(),
             typescript({
@@ -66,8 +69,13 @@ export default [
             file: 'dist/index.umd.js',
             format: 'umd',
             name: 'LeoWaterfall',
-            sourcemap: true
+            sourcemap: true,
+            globals: {
+                react: 'React',
+                'react-dom': 'ReactDOM'
+            }
         },
+        external: ['react', 'react-dom'],
         plugins: [
             resolve(),
             typescript({
