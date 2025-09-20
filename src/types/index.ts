@@ -11,8 +11,15 @@ export interface WaterfallLayoutColumnItem {
 }
 
 // 瀑布流布局
-
 export interface WaterfallLayoutResult {
     images: WaterfallLayoutColumnItem[],
     totalColumns: number,
+}
+
+
+// 入参
+export interface WaterfallGridProps {
+    imageCount?: number,
+    columnWidth?: number,
+    gap?: number,
 }

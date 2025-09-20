@@ -6,7 +6,7 @@ import {
 import "./WaterfallGrid.css";
 
 function WaterfallGrid({
-  imageCount = 50,
+  imageCount = 50, 
   columnWidth = 300,
   gap = 16,
 }) {
