@@ -23,6 +23,7 @@ export default [
     // ES modules build
     {
         input: 'src/index.ts',
+        external: ['react', 'react-dom', 'react/jsx-runtime'],
         output: {
             file: 'dist/index.esm.js',
             format: 'es',
@@ -42,6 +43,7 @@ export default [
     // CommonJS build
     {
         input: 'src/index.ts',
+        external: ['react', 'react-dom', 'react/jsx-runtime'],
         output: {
             file: 'dist/index.js',
             format: 'cjs',
@@ -62,11 +64,17 @@ export default [
     // UMD build for browsers
     {
         input: 'src/index.ts',
+        external: ['react', 'react-dom', 'react/jsx-runtime'],
         output: {
             file: 'dist/index.umd.js',
             format: 'umd',
-            name: 'LeoWaterfall',
-            sourcemap: true
+            name: 'SolarWaterfall',
+            sourcemap: true,
+            globals: {
+                'react': 'React',
+                'react-dom': 'ReactDOM',
+                'react/jsx-runtime': 'ReactJSXRuntime'
+            }
         },
         plugins: [
             resolve(),

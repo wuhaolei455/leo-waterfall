@@ -1,49 +1,118 @@
 import { ImageInfo, WaterfallLayoutColumnItem, WaterfallLayoutResult } from "../types";
 
-// 贪心算法实现瀑布流算法
-// 一组图片宽高
-// 一个列宽、一个间隙、一个最小列数、一个最大列数
-// 返回：总列数、最大高度、总高度、分组后的图片宽高？（不应该是一个二维数组吗 √）
-export function createWaterfallLayout(
-    images: ImageInfo[],
-    _columnWidth = 400,
-    _gap = 16,
-    _minColumns = 2,
-    _maxColumns = 8
-): WaterfallLayoutResult {
-    // todo 计算列数
-    const screenWidth = typeof window !== "undefined" ? window.innerWidth : 1200;
-    const availableWidth = screenWidth - 64; // 减去页面边距
-    const columnWithGap = _columnWidth + _gap;
+export interface CreateWaterfallLayoutOptions {
+    columnWidth?: number;
+    gap?: number;
+    minColumns?: number;
+    maxColumns?: number;
+    containerWidth?: number;
+    minimumItemHeight?: number;
+    defaultItemHeight?: number;
+}
 
-    let columnCount = Math.floor(availableWidth / columnWithGap);
-    columnCount = Math.max(_minColumns, Math.min(_maxColumns, columnCount));
+function clamp(value: number, min: number, max: number): number {
+    return Math.max(min, Math.min(max, value));
+}
 
-    const columns: WaterfallLayoutColumnItem[] = Array.from({ length: columnCount }, () => {
-        const initData: WaterfallLayoutColumnItem = {
-            items: [],
-            totalHeight: 0,
-        }
-        return initData;
-    });
-    const waterfallLayoutParams: WaterfallLayoutResult = {
-        images: columns,
-        totalColumns: columnCount,
+function getContainerWidth(containerWidth?: number): number {
+    if (typeof containerWidth === "number" && Number.isFinite(containerWidth) && containerWidth > 0) {
+        return containerWidth;
     }
 
-    // 贪心算法，填充columns
-    images.forEach((image) => {
-        const scaledHeight = (image.height * _columnWidth) / image.width;
-        const currentShortestColumnIndex = columns.reduce((minIndex, column, index) => {
-            return columns[minIndex].totalHeight > column.totalHeight ? index : minIndex;
-        }, 0);
+    if (typeof window !== "undefined" && typeof window.innerWidth === "number") {
+        return window.innerWidth;
+    }
 
-        columns[currentShortestColumnIndex].items.push({
-            width: _columnWidth,
+    return 1200;
+}
+
+function getSafeGap(gap?: number): number {
+    if (typeof gap !== "number" || Number.isNaN(gap)) {
+        return 0;
+    }
+    return Math.max(0, gap);
+}
+
+/**
+ * 计算瀑布流布局
+ */
+export function createWaterfallLayout(
+    images: ImageInfo[],
+    options: CreateWaterfallLayoutOptions = {}
+): WaterfallLayoutResult {
+    const {
+        columnWidth = 320,
+        gap: rawGap = 16,
+        minColumns = 2,
+        maxColumns = 8,
+        containerWidth,
+    } = options;
+
+    const gap = getSafeGap(rawGap);
+
+    if (!Array.isArray(images) || images.length === 0) {
+        const columns: WaterfallLayoutColumnItem[] = Array.from({ length: minColumns }, () => ({ items: [], totalHeight: 0 }));
+        return {
+            columns,
+            images: columns,
+            totalColumns: minColumns,
+            columnWidth,
+            containerWidth: getContainerWidth(containerWidth),
+            gap,
+            maxColumnHeight: 0,
+        };
+    }
+
+    const computedContainerWidth = getContainerWidth(containerWidth);
+    const availableWidth = Math.max(computedContainerWidth - gap * 2, columnWidth);
+    const columnWithGap = columnWidth + gap;
+
+    let columnCount = Math.floor(availableWidth / columnWithGap);
+    columnCount = clamp(columnCount, minColumns, maxColumns);
+
+    const columns: WaterfallLayoutColumnItem[] = Array.from({ length: columnCount }, () => ({
+        items: [],
+        totalHeight: 0,
+    }));
+
+    images.forEach((image, index) => {
+        const width = image.width ?? image.originalWidth ?? columnWidth;
+        const height = image.height ?? image.originalHeight ?? columnWidth;
+        const aspectRatio = image.aspectRatio ?? (height && width ? height / width : undefined);
+
+        const scaledHeight = aspectRatio ? columnWidth * aspectRatio : (height * columnWidth) / (width || columnWidth);
+
+        const shortestColumnIndex = columns.reduce((minIndex, column, columnIndex) => (
+            columns[minIndex].totalHeight > column.totalHeight ? columnIndex : minIndex
+        ), 0);
+
+        const metadata = image.metadata ? { ...image.metadata } : undefined;
+
+        const item: ImageInfo = {
+            id: image.id ?? index,
+            width: columnWidth,
             height: scaledHeight,
-        });
-        columns[currentShortestColumnIndex].totalHeight += scaledHeight + _gap;
+            src: image.src,
+            alt: image.alt,
+            metadata,
+            originalHeight: height,
+            originalWidth: width,
+            aspectRatio: aspectRatio ?? (height && width ? height / width : undefined),
+        };
+
+        columns[shortestColumnIndex].items.push(item);
+        columns[shortestColumnIndex].totalHeight += scaledHeight + gap;
     });
 
-    return waterfallLayoutParams;
+    const maxColumnHeight = columns.reduce((max, column) => Math.max(max, column.totalHeight), 0);
+
+    return {
+        columns,
+        images: columns,
+        totalColumns: columnCount,
+        columnWidth,
+        containerWidth: computedContainerWidth,
+        gap,
+        maxColumnHeight,
+    };
 }
