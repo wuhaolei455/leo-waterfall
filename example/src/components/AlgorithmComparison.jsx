@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { generateTestImages, createWaterfallLayout } from '../utils/waterfallLayout';
-import { compareAlgorithms, createWaterfallLayoutDP } from '../utils/waterfallLayoutDP';
+import { createWaterfallLayout, createHybridWaterfallLayout } from 'solar-waterfall';
+import { generateDemoImages } from '../utils/imageData';
+import { compareAlgorithms } from '../utils/waterfallLayoutDP';
 import './AlgorithmComparison.css';
 
 function AlgorithmComparison() {
@@ -14,12 +15,33 @@ function AlgorithmComparison() {
     setIsComputing(true);
     
     // 生成测试图片
-    const newTestImages = generateTestImages(imageCount);
+    const newTestImages = generateDemoImages(imageCount);
     setTestImages(newTestImages);
     
     // 延迟执行以显示加载状态
     setTimeout(() => {
-      const comparisonResults = compareAlgorithms(newTestImages, 300, 16, columnCount);
+      const greedy = createWaterfallLayout(newTestImages, {
+        columnWidth: 300,
+        gap: 16,
+        minColumns: columnCount,
+        maxColumns: columnCount,
+      });
+
+      const hybrid = createHybridWaterfallLayout(newTestImages, {
+        columnWidth: 300,
+        gap: 16,
+        columns: columnCount,
+      });
+
+      const comparisonResults = compareAlgorithms({
+        images: newTestImages,
+        greedy,
+        hybrid,
+        columnWidth: 300,
+        gap: 16,
+        columnCount,
+      });
+
       setResults(comparisonResults);
       setIsComputing(false);
     }, 100);
