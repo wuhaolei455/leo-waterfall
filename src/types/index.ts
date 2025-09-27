@@ -13,6 +13,8 @@ export interface ImageInfo {
     originalHeight?: number;
     /** 宽高比，height / width */
     aspectRatio?: number;
+    /** 图片是否可见，用于懒加载 */
+    isVisible?: boolean;
     /** 额外数据 */
     metadata?: Record<string, unknown>;
 }

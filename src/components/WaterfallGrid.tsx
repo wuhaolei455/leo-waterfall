@@ -10,10 +10,10 @@ import {
 } from "react";
 import type {
   WaterfallGridProps,
-  ImageInfo,
   WaterfallLayoutResult,
 } from "../types";
 import { createWaterfallLayout } from "../utils/waterfallLayout";
+import { defaultRenderItem } from "./DefaultImageRenterItem";
 
 function WaterfallGrid({
   images = [],
@@ -101,16 +101,7 @@ function WaterfallGrid({
 
     setLayout(layoutResult);
     onLayout?.(layoutResult);
-  }, [
-    isEmpty,
-    images,
-    columnWidth,
-    gap,
-    minColumns,
-    maxColumns,
-    containerWidth,
-    onLayout,
-  ]);
+  }, [isEmpty,images,columnWidth,gap,minColumns,maxColumns,containerWidth,onLayout]);
 
   useEffect(() => {
     const containerEl = containerRef.current;
@@ -224,54 +215,6 @@ function WaterfallGrid({
           </div>
         );
       })}
-    </div>
-  );
-}
-
-function defaultRenderItem(item: ImageInfo) {
-  const resolvedHeight =
-    item.height ?? item.originalHeight ?? item.originalWidth;
-  const itemStyle: CSSProperties = {
-    position: "relative",
-    borderRadius: 8,
-    background: "#f8fafc",
-    boxShadow: "0 8px 16px rgba(15, 23, 42, 0.08)",
-    overflow: "hidden",
-  };
-
-  return (
-    <div className="sw-waterfall-item" style={itemStyle}>
-      {item.src ? (
-        <img
-          src={item.src}
-          alt={item.alt ?? "waterfall-item"}
-          style={{
-            display: "block",
-            width: "100%",
-            height: resolvedHeight,
-            objectFit: "cover",
-            borderRadius: 8,
-            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.08)",
-          }}
-          loading="lazy"
-        />
-      ) : (
-        <div
-          style={{
-            width: "100%",
-            height: resolvedHeight,
-            borderRadius: 8,
-            background: "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#6b7280",
-            fontSize: 12,
-          }}
-        >
-          {item.alt ?? "Loading"}
-        </div>
-      )}
     </div>
   );
 }
