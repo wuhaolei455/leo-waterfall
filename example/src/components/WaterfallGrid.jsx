@@ -11,13 +11,18 @@ function WaterfallGrid({
   const [images, setImages] = useState([]);
   const [imageMetrics, setImageMetrics] = useState([]);
   const [computedLayout, setComputedLayout] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20; // 每次加载20张图片
 
-  // 生成图片数据
+  // 初始化第一页数据
   useEffect(() => {
-    const demoImages = generateDemoImages(imageCount);
-    setImages(demoImages);
-
-    const initialMetrics = demoImages.map((img) => ({
+    const actualLoadCount = Math.min(pageSize, imageCount);
+    const initialImages = generateDemoImages(actualLoadCount);
+    setImages(initialImages);
+    
+    const initialMetrics = initialImages.map((img) => ({
       id: img.id,
       loaded: false,
       error: false,
@@ -26,7 +31,19 @@ function WaterfallGrid({
       loadOrder: 0,
     }));
     setImageMetrics(initialMetrics);
-  }, [imageCount]);
+    
+    setCurrentPage(1);
+    // 只有当实际加载的数量小于总数时才有更多数据
+    const initialHasMore = actualLoadCount < imageCount;
+    setHasMore(initialHasMore);
+    
+    console.log('初始化:', {
+      pageSize,
+      imageCount,
+      actualLoadCount,
+      initialHasMore
+    });
+  }, [imageCount, pageSize]);
 
   const sdkImages = useMemo(() => images, [images]);
 
@@ -37,6 +54,48 @@ function WaterfallGrid({
     },
     []
   );
+
+  // 加载更多数据
+  const handleLoadMore = useCallback(() => {
+    if (loading || !hasMore) return;
+    
+    setLoading(true);
+    
+    // 模拟网络延迟
+    setTimeout(() => {
+      const nextPage = currentPage + 1;
+      const startIndex = currentPage * pageSize;
+      const endIndex = Math.min(startIndex + pageSize, imageCount);
+      
+      if (startIndex >= imageCount) {
+        setHasMore(false);
+        setLoading(false);
+        return;
+      }
+      
+      // 生成新的图片数据
+      const newImages = generateDemoImages(pageSize, startIndex);
+      const actualNewImages = newImages.slice(0, endIndex - startIndex);
+      
+      // 合并到现有图片数组
+      setImages(prevImages => [...prevImages, ...actualNewImages]);
+      
+      // 为新图片添加指标
+      const newMetrics = actualNewImages.map((img) => ({
+        id: img.id,
+        loaded: false,
+        error: false,
+        loadTime: 0,
+        inViewport: false,
+        loadOrder: 0,
+      }));
+      setImageMetrics(prevMetrics => [...prevMetrics, ...newMetrics]);
+      
+      setCurrentPage(nextPage);
+      setHasMore(endIndex < imageCount);
+      setLoading(false);
+    }, 500); // 1秒延迟模拟加载时间
+  }, [loading, hasMore, currentPage, pageSize, imageCount]);
 
   // 图片加载处理
   const handleImageLoad = (imageId, loadTime) => {
@@ -61,7 +120,7 @@ function WaterfallGrid({
       <div className="waterfall-header">
         <h2 className="waterfall-title">🌊 瀑布流图片展示</h2>
         <div className="waterfall-description">
-          瀑布流布局 - {imageCount} 张图片动态排列
+          瀑布流布局 + 懒加载 + 无限滚动 - 共{imageCount}张图片，已加载{images.length}张
         </div>
         <div className="waterfall-stats">
           <div className="stat-item">
@@ -92,6 +151,31 @@ function WaterfallGrid({
           minColumns={2}
           maxColumns={10}
           onLayout={handleLayout}
+          hasMore={hasMore}
+          loading={loading}
+          loadingThreshold={200}
+          onLoadMore={handleLoadMore}
+          loadingPlaceholder={
+            <div style={{ textAlign: "center" }}>
+              <div style={{ 
+                display: "inline-block", 
+                width: 20, 
+                height: 20, 
+                border: "2px solid #e2e8f0", 
+                borderTop: "2px solid #3b82f6", 
+                borderRadius: "50%", 
+                animation: "spin 1s linear infinite",
+                marginBottom: 8 
+              }}></div>
+              <div>正在加载更多精彩内容...</div>
+            </div>
+          }
+          loadMorePlaceholder={
+            <div style={{ textAlign: "center" }}>
+              <div style={{ marginBottom: 8 }}>🌊</div>
+              <div>继续滚动加载更多</div>
+            </div>
+          }
           renderItem={({ item }) => {
             const metric = imageMetrics.find((m) => m.id === item.id);
 

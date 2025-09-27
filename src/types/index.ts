@@ -58,4 +58,12 @@ export interface WaterfallGridProps {
     emptyPlaceholder?: ReactNode;
     renderItem?: (params: RenderWaterfallItemParams) => ReactNode;
     onLayout?: (layout: WaterfallLayoutResult) => void;
+    
+    // LoadMore 相关属性
+    hasMore?: boolean;
+    loading?: boolean;
+    loadingThreshold?: number;
+    onLoadMore?: () => void;
+    loadMorePlaceholder?: ReactNode;
+    loadingPlaceholder?: ReactNode;
 }

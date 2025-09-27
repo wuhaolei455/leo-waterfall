@@ -1,5 +1,11 @@
 /* 瀑布流组件样式 */
 
+/* 加载动画 */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .waterfall-container {
   max-width: 1400px;
   margin: 0 auto;
