@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 import WaterfallGrid from './components/WaterfallGrid';
-import AlgorithmComparison from './components/AlgorithmComparison';
-import ErrorSimulation from './components/ErrorSimulation';
 
 function App() {
   const [imageCount, setImageCount] = useState(30);
@@ -19,18 +17,6 @@ function App() {
           onClick={() => setActiveTab('waterfall')}
         >
           🌊 瀑布流展示
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'comparison' ? 'active' : ''}`}
-          onClick={() => setActiveTab('comparison')}
-        >
-          🧮 算法对比
-        </button>
-        <button 
-          className={`nav-tab ${activeTab === 'errors' ? 'active' : ''}`}
-          onClick={() => setActiveTab('errors')}
-        >
-          🐛 错误模拟
         </button>
       </div>
 
